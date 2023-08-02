@@ -1,6 +1,6 @@
 {
   "name": "yourgpt-chatbot-reactnative",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "YourGPT Chatbot for react native",
   "main": "lib/index.tsx",
   "types": "lib/index.d.ts",
@@ -8,6 +8,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "YourGPT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YourGPT/chatbot-reactnative"
+  },
   "license": "MIT",
   "keywords": [
     "react-native",

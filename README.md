@@ -30,7 +30,7 @@ No aditional configuration required.
 
 ## Usage
 
-You can get your project_id and widget_id from <a href="https://chatbot.yourgpt.ai" target="_blank">chatbot.yourgpt.ai</a>
+You can get your project_id and widget_id from <a href="https://yourgpt.ai/chatbot" target="_blank">https://yourgpt.ai/chatbot</a>
 
 ```
 // In app.tsx
