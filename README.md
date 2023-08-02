@@ -1,79 +1,89 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# yourgpt-chatbot-reactnative
 
-# Getting Started
+Integrate YourGPT Chatbot seamlessly into your react-native application.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## Installation
 
-## Step 1: Start the Metro Server
+### 1. Add yourgpt-chatbot-reactnative to your dependencies
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
-
-To start Metro, run the following command from the _root_ of your React Native project:
-
-```bash
-# using npm
-npm start
-
-# OR using Yarn
-yarn start
+```
+$ npm i yourgpt-chatbot-reactnative
 ```
 
-## Step 2: Start your Application
+### 2. Add react-native-webview to your dependencies
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+Refer <a href="https://github.com/react-native-webview/react-native-webview/blob/master/docs/Getting-Started.md" target="_blank">react-native-webview docs</a>
 
-### For Android
+### 3. Link native dependencies
 
-```bash
-# using npm
-npm run android
+##### iOS & macOS:
 
-# OR using Yarn
-yarn android
+If using CocoaPods, in the ios/ or macos/ directory run:
+
+```
+$ pod install
 ```
 
-### For iOS
+##### Android:
 
-```bash
-# using npm
-npm run ios
+No aditional configuration required.
 
-# OR using Yarn
-yarn ios
+## Usage
+
+You can get your project_id and widget_id from <a href="https://chatbot.yourgpt.ai" target="_blank">chatbot.yourgpt.ai</a>
+
+```
+// In app.tsx
+import React from 'react';
+import {SafeAreaView, View} from 'react-native';
+import YourGPTProvider from 'yourgpt-chatbot-reactnative';
+
+function App(): JSX.Element {
+  return (
+    <SafeAreaView style={{flex: 1}}>
+      <YourGPTProvider projectId="Your_Project_Id" widgetId="Your_Widget_Id">
+          // SOME CODE HERE
+      </YourGPTProvider>
+    </SafeAreaView>
+  );
+}
+
+export default App;
+
 ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+```
+// In components/OpenBot.tsx
+import React from 'react';
+import {Button} from 'react-native';
+import {useYourGPT} from 'yourgpt-chatbot-reactnative';
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+export default function OpenBot() {
+  const {open} = useYourGPT();
 
-## Step 3: Modifying your App
+  return <Button onPress={open} title="Open Bot" />;
+}
 
-Now that you have successfully run the app, let's modify it.
+```
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+## API
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+#### Props
 
-## Congratulations! :tada:
+Props which will be passed in `<YourGPTProvider>`
 
-You've successfully run and modified your React Native App. :partying_face:
+| Prop        | Type      | Required | Description                                                        |
+| ----------- | --------- | -------- | ------------------------------------------------------------------ |
+| projectId   | String    | Yes      | Project id of yourGPT chatbot                                      |
+| widgetId    | String    | Yes      | Widget id of yourGPT chatbot                                       |
+| headerColor | String    | No       | Custom header color, by default transparent                        |
+| children    | ReactNode | Yes      | React native elements which will be wrapped inside YourGPTProvider |
 
-### Now what?
+#### Methods
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+All the methods which you can get from `useYourGPT` hook.
 
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+| Method | Parameter | Description                          |
+| ------ | --------- | ------------------------------------ |
+| open   | void      | Open chatbot widget inside a webview |
+| close  | void      | Close chatbot widget                 |
