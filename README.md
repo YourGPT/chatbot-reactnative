@@ -1,13 +1,13 @@
-# yourgpt-chatbot-reactnative
+# @yourgpt/chatbot-reactnative
 
 Integrate YourGPT Chatbot seamlessly into your react-native application.
 
 ## Installation
 
-### 1. Add yourgpt-chatbot-reactnative to your dependencies
+### 1. Add @yourgpt/chatbot-reactnative to your dependencies
 
 ```
-$ npm i yourgpt-chatbot-reactnative
+$ npm i @yourgpt/chatbot-reactnative
 ```
 
 ### 2. Add react-native-webview to your dependencies
@@ -36,7 +36,7 @@ You can get your project_id and widget_id from <a href="https://yourgpt.ai/chatb
 // In app.tsx
 import React from 'react';
 import {SafeAreaView, View} from 'react-native';
-import YourGPTProvider from 'yourgpt-chatbot-reactnative';
+import YourGPTProvider from '@yourgpt/chatbot-reactnative';
 
 function App(): JSX.Element {
   return (
@@ -56,7 +56,7 @@ export default App;
 // In components/OpenBot.tsx
 import React from 'react';
 import {Button} from 'react-native';
-import {useYourGPT} from 'yourgpt-chatbot-reactnative';
+import {useYourGPT} from '@yourgpt/chatbot-reactnative';
 
 export default function OpenBot() {
   const {open} = useYourGPT();
