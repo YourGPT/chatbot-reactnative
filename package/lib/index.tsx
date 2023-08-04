@@ -1,5 +1,12 @@
 import React, {createContext, useContext, useState} from 'react';
-import {Dimensions, Linking, Modal, SafeAreaView, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Dimensions,
+  Linking,
+  Modal,
+  SafeAreaView,
+  View,
+} from 'react-native';
 import {WebView} from 'react-native-webview';
 
 const YourGPTContext = createContext(
@@ -21,14 +28,17 @@ export default function YourGPTProvider({
   headerColor?: string;
 }) {
   const [showWidget, setShowWidget] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const open = () => {
+    setShowWidget(true);
     setTimeout(() => {
-      setShowWidget(true);
-    }, 500);
+      setLoading(false);
+    }, 4000);
   };
   const close = () => {
     setShowWidget(false);
+    setLoading(true);
   };
 
   const injectJavaScript = `
@@ -70,6 +80,21 @@ export default function YourGPTProvider({
               }}
             />
             <SafeAreaView style={{flex: 1, zIndex: 10}}>
+              {loading && (
+                <View
+                  style={{
+                    position: 'absolute',
+                    width: Dimensions.get('window').width,
+                    height: Dimensions.get('window').height,
+                    backgroundColor: '#fff',
+                    zIndex: 999,
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <ActivityIndicator size="large" />
+                </View>
+              )}
               <WebView
                 source={{
                   uri: `https://widget.yourgpt.ai/${projectId}/${widgetId}?view=app`,
