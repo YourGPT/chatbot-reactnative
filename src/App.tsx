@@ -14,8 +14,8 @@ export default function App(): JSX.Element {
   return (
     <SafeAreaView style={{flex: 1}}>
       <YourGPTProvider
-        projectId="6ab3600e-7fcd-4261-9a15-abf9beabf455"
-        widgetId="600c90f7-322c-4c28-851a-f5e08dddb33f">
+        projectId={'YOUR_PROJECT_ID'}
+        widgetId={'YOUR_WIDGET_ID'}>
         <View>
           <OpenBot />
         </View>

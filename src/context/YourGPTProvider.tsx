@@ -23,7 +23,9 @@ export default function YourGPTProvider({
   const [showWidget, setShowWidget] = useState(false);
 
   const open = () => {
-    setShowWidget(true);
+    setTimeout(() => {
+      setShowWidget(true);
+    }, 500);
   };
   const close = () => {
     setShowWidget(false);
@@ -55,36 +57,38 @@ export default function YourGPTProvider({
           transparent
           animationType="fade"
           onRequestClose={close}>
-          <View
-            style={{
-              backgroundColor: headerColor,
-              width: Dimensions.get('screen').width,
-              height: 300,
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              zIndex: 5,
-            }}
-          />
-          <SafeAreaView style={{flex: 1, zIndex: 10}}>
-            <WebView
-              source={{
-                uri: `https://widget.yourgpt.ai/${projectId}/${widgetId}?view=app`,
-              }}
+          <View style={{flex: 1}}>
+            <View
               style={{
-                flex: 1,
+                backgroundColor: headerColor,
+                width: Dimensions.get('screen').width,
+                height: 300,
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                zIndex: 5,
               }}
-              onOpenWindow={syntheticEvent => {
-                const {nativeEvent} = syntheticEvent;
-                const {targetUrl} = nativeEvent;
-                Linking.openURL(targetUrl);
-              }}
-              javaScriptEnabled={true}
-              injectedJavaScript={injectJavaScript}
-              onMessage={onMessage}
-              containerStyle={{}}
             />
-          </SafeAreaView>
+            <SafeAreaView style={{flex: 1, zIndex: 10}}>
+              <WebView
+                source={{
+                  uri: `https://widget.yourgpt.ai/${projectId}/${widgetId}?view=app`,
+                }}
+                style={{
+                  flex: 1,
+                }}
+                onOpenWindow={syntheticEvent => {
+                  const {nativeEvent} = syntheticEvent;
+                  const {targetUrl} = nativeEvent;
+                  Linking.openURL(targetUrl);
+                }}
+                javaScriptEnabled={true}
+                injectedJavaScript={injectJavaScript}
+                onMessage={onMessage}
+                containerStyle={{}}
+              />
+            </SafeAreaView>
+          </View>
         </Modal>
       )}
       {children}
