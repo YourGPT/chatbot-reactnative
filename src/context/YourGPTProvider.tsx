@@ -95,7 +95,7 @@ export default function YourGPTProvider({
 export function useYourGPT() {
   const context = useContext(YourGPTContext);
   if (context === undefined) {
-    throw new Error("useYourGPT should be used inside YourGPTProvider");
+    throw new Error('useYourGPT should be used inside YourGPTProvider');
   }
 
   return context;

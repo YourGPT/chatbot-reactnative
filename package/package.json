@@ -1,6 +1,6 @@
 {
   "name": "@yourgpt/chatbot-reactnative",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "YourGPT Chatbot for react native",
   "main": "lib/index.tsx",
   "types": "lib/index.d.ts",
@@ -17,7 +17,7 @@
     "react-native",
     "ios",
     "android",
-    "webview"
+    "gpt-chatbot"
   ],
   "peerDependencies": {
     "react": "18.2.0",

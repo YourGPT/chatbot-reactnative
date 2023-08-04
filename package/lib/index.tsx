@@ -1,15 +1,25 @@
-import React, { createContext, useContext, useState } from "react";
-import { Dimensions, Linking, Modal, SafeAreaView, View } from "react-native";
-import { WebView } from "react-native-webview";
+import React, {createContext, useContext, useState} from 'react';
+import {Dimensions, Linking, Modal, SafeAreaView, View} from 'react-native';
+import {WebView} from 'react-native-webview';
 
 const YourGPTContext = createContext(
   {} as {
     open: () => void;
     close: () => void;
-  }
+  },
 );
 
-export default function YourGPTProvider({ projectId, widgetId, headerColor = "transparent", children }: { children: React.ReactNode; projectId: string; widgetId: string; headerColor?: string }) {
+export default function YourGPTProvider({
+  projectId,
+  widgetId,
+  headerColor = 'transparent',
+  children,
+}: {
+  children: React.ReactNode;
+  projectId: string;
+  widgetId: string;
+  headerColor?: string;
+}) {
   const [showWidget, setShowWidget] = useState(false);
 
   const open = () => {
@@ -32,27 +42,31 @@ export default function YourGPTProvider({ projectId, widgetId, headerColor = "tr
 `;
 
   const onMessage = (event: any) => {
-    if (event.nativeEvent.data === "closeButtonPressed") {
+    if (event.nativeEvent.data === 'closeButtonPressed') {
       close();
     }
   };
 
   return (
-    <YourGPTContext.Provider value={{ open, close }}>
+    <YourGPTContext.Provider value={{open, close}}>
       {showWidget && (
-        <Modal visible={showWidget} transparent animationType="fade" onRequestClose={close}>
+        <Modal
+          visible={showWidget}
+          transparent
+          animationType="fade"
+          onRequestClose={close}>
           <View
             style={{
               backgroundColor: headerColor,
-              width: Dimensions.get("screen").width,
+              width: Dimensions.get('screen').width,
               height: 300,
-              position: "absolute",
+              position: 'absolute',
               top: 0,
               left: 0,
               zIndex: 5,
             }}
           />
-          <SafeAreaView style={{ flex: 1, zIndex: 10 }}>
+          <SafeAreaView style={{flex: 1, zIndex: 10}}>
             <WebView
               source={{
                 uri: `https://widget.yourgpt.ai/${projectId}/${widgetId}?view=app`,
@@ -60,9 +74,9 @@ export default function YourGPTProvider({ projectId, widgetId, headerColor = "tr
               style={{
                 flex: 1,
               }}
-              onOpenWindow={(syntheticEvent) => {
-                const { nativeEvent } = syntheticEvent;
-                const { targetUrl } = nativeEvent;
+              onOpenWindow={syntheticEvent => {
+                const {nativeEvent} = syntheticEvent;
+                const {targetUrl} = nativeEvent;
                 Linking.openURL(targetUrl);
               }}
               javaScriptEnabled={true}
@@ -81,7 +95,7 @@ export default function YourGPTProvider({ projectId, widgetId, headerColor = "tr
 export function useYourGPT() {
   const context = useContext(YourGPTContext);
   if (context === undefined) {
-    throw new Error("useYourGPT should be used inside YourGPTProvider");
+    throw new Error('useYourGPT should be used inside YourGPTProvider');
   }
 
   return context;

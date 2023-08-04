@@ -1,8 +1,8 @@
-import React from "react";
-import { ModalProps } from "react-native";
-import { WebViewProps } from "react-native-webview";
+import React from 'react';
+import {ModalProps} from 'react-native';
+import {WebViewProps} from 'react-native-webview';
 
-declare module "yourgpt-chatbot-reactnative" {
+declare module '@yourgpt/chatbot-reactnative' {
   export interface YourGPTProviderProps {
     projectId: string;
     widgetId: string;
@@ -10,7 +10,9 @@ declare module "yourgpt-chatbot-reactnative" {
     children: React.ReactNode;
   }
 
-  export default function YourGPTProvider(props: YourGPTProviderProps): React.ReactNode;
+  export default function YourGPTProvider(
+    props: YourGPTProviderProps,
+  ): React.ReactNode;
 
   export function useYourGPT(): {
     open: () => void;
