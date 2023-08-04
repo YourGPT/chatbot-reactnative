@@ -1,6 +1,6 @@
 {
-  "name": "yourgpt-chatbot-reactnative",
-  "version": "1.0.3",
+  "name": "@yourgpt/chatbot-reactnative",
+  "version": "1.0.0",
   "description": "YourGPT Chatbot for react native",
   "main": "lib/index.tsx",
   "types": "lib/index.d.ts",
