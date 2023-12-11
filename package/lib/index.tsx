@@ -22,7 +22,6 @@ export default function YourGPTProvider({
   children,
 }: {
   children: React.ReactNode;
-  projectId: string;
   widgetId: string;
   headerColor?: string;
 }) {
