@@ -30,7 +30,7 @@ No aditional configuration required.
 
 ## Usage
 
-You can get your project_id and widget_id from <a href="https://yourgpt.ai/chatbot" target="_blank">https://yourgpt.ai/chatbot</a>
+You can get your widget_id from <a href="https://yourgpt.ai/chatbot" target="_blank">https://yourgpt.ai/chatbot</a>
 
 ```
 // In app.tsx
@@ -41,8 +41,8 @@ import YourGPTProvider from '@yourgpt/chatbot-reactnative';
 function App(): JSX.Element {
   return (
     <SafeAreaView style={{flex: 1}}>
-      <YourGPTProvider projectId="Your_Project_Id" widgetId="Your_Widget_Id">
-          // SOME CODE HERE
+      <YourGPTProvider widgetId="Your_Widget_Id">
+          // YOUR CODE HERE
       </YourGPTProvider>
     </SafeAreaView>
   );
@@ -74,7 +74,6 @@ Props which will be passed in `<YourGPTProvider>`
 
 | Prop        | Type      | Required | Description                                                        |
 | ----------- | --------- | -------- | ------------------------------------------------------------------ |
-| projectId   | String    | Yes      | Project id of yourGPT chatbot                                      |
 | widgetId    | String    | Yes      | Widget id of yourGPT chatbot                                       |
 | headerColor | String    | No       | Custom header color, by default transparent                        |
 | children    | ReactNode | Yes      | React native elements which will be wrapped inside YourGPTProvider |

@@ -17,7 +17,6 @@ const YourGPTContext = createContext(
 );
 
 export default function YourGPTProvider({
-  projectId,
   widgetId,
   headerColor = 'transparent',
   children,
@@ -97,7 +96,7 @@ export default function YourGPTProvider({
               )}
               <WebView
                 source={{
-                  uri: `https://widget.yourgpt.ai/${projectId}/${widgetId}?view=app`,
+                  uri: `https://widget.yourgpt.ai/${widgetId}?view=app`,
                 }}
                 style={{
                   flex: 1,

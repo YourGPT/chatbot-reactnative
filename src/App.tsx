@@ -6,20 +6,18 @@
  */
 
 import React from 'react';
-import {SafeAreaView, View} from 'react-native';
+import {View} from 'react-native';
 import OpenBot from './components/OpenBot';
 import YourGPTProvider from './context/YourGPTProvider';
 
 export default function App(): JSX.Element {
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <YourGPTProvider
-        projectId={'YOUR_PROJECT_ID'}
-        widgetId={'YOUR_WIDGET_ID'}>
+    <View style={{flex: 1}}>
+      <YourGPTProvider widgetId="YOUR_WIDGET_ID">
         <View>
           <OpenBot />
         </View>
       </YourGPTProvider>
-    </SafeAreaView>
+    </View>
   );
 }

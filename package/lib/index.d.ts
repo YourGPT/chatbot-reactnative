@@ -4,7 +4,6 @@ import {WebViewProps} from 'react-native-webview';
 
 declare module '@yourgpt/chatbot-reactnative' {
   export interface YourGPTProviderProps {
-    projectId: string;
     widgetId: string;
     headerColor?: string;
     children: React.ReactNode;

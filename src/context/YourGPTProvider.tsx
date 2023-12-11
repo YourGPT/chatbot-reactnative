@@ -5,6 +5,7 @@ import {
   Linking,
   Modal,
   SafeAreaView,
+  Text,
   View,
 } from 'react-native';
 import {WebView} from 'react-native-webview';
@@ -17,13 +18,11 @@ const YourGPTContext = createContext(
 );
 
 export default function YourGPTProvider({
-  projectId,
   widgetId,
   headerColor = 'transparent',
   children,
 }: {
   children: React.ReactNode;
-  projectId: string;
   widgetId: string;
   headerColor?: string;
 }) {
@@ -34,7 +33,7 @@ export default function YourGPTProvider({
     setShowWidget(true);
     setTimeout(() => {
       setLoading(false);
-    }, 4000);
+    }, 3000);
   };
   const close = () => {
     setShowWidget(false);
@@ -95,9 +94,19 @@ export default function YourGPTProvider({
                   <ActivityIndicator size="large" />
                 </View>
               )}
+              {/* <Text
+                style={{
+                  position: 'absolute',
+                  right: 20,
+                  top: 30,
+                  zIndex: 999,
+                  width: 20,
+                }}>
+                X
+              </Text> */}
               <WebView
                 source={{
-                  uri: `https://widget.yourgpt.ai/${projectId}/${widgetId}?view=app`,
+                  uri: `https://widget.yourgpt.ai/${widgetId}?view=app`,
                 }}
                 style={{
                   flex: 1,
