@@ -5,7 +5,6 @@ import {
   Linking,
   Modal,
   SafeAreaView,
-  Text,
   View,
 } from 'react-native';
 import {WebView} from 'react-native-webview';
@@ -94,16 +93,6 @@ export default function YourGPTProvider({
                   <ActivityIndicator size="large" />
                 </View>
               )}
-              {/* <Text
-                style={{
-                  position: 'absolute',
-                  right: 20,
-                  top: 30,
-                  zIndex: 999,
-                  width: 20,
-                }}>
-                X
-              </Text> */}
               <WebView
                 source={{
                   uri: `https://widget.yourgpt.ai/${widgetId}?view=app`,
