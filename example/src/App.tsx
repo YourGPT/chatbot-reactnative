@@ -26,7 +26,7 @@ export default function App(): JSX.Element {
     <SafeAreaProvider>
       <PostProvider>
         <YourGPTWithDataProvider
-          widgetId="69dd8b5d-d4bf-444c-a40f-732d15248ae9"
+          widgetId="yourgpt-widget-uid"
           onClose={() => {
             console.log('Chatbot closed');
           }}
