@@ -398,5 +398,5 @@ npm run android
 ## Support
 
 - Documentation: [https://docs.yourgpt.ai](https://docs.yourgpt.ai)
-- Issues: [GitHub Issues](https://github.com/YourGPT/yourgpt-widget-sdk-react-native/issues)
+- Issues: [GitHub Issues](https://github.com/YourGPT/chatbot-reactnative/issues)
 - Email: support@yourgpt.ai
