@@ -1,6 +1,7 @@
 import { Platform } from 'react-native';
 import type { YourGPTNotificationConfig, NotificationAction } from '../types/config';
 import { Logger } from '../utils/logger';
+import { withNotificationDefaults } from './defaults';
 
 /**
  * Static utility class for advanced notification operations.
@@ -60,15 +61,15 @@ export class YourGPTNotificationHelper {
 
     try {
       const notifee = require('@notifee/react-native').default;
-      const channelId = config?.channelId ?? 'yourgpt_messages_v2';
+      const cfg = withNotificationDefaults(config);
+      const channelId = cfg.channelId;
 
       await notifee.createChannel({
         id: channelId,
-        name: config?.channelName ?? 'YourGPT Messages',
+        name: cfg.channelName,
+        description: cfg.channelDescription,
         importance: 4,
-        sound: config?.soundEnabled !== false
-          ? (config?.soundUri ?? 'yourgpt_notification')
-          : undefined,
+        sound: cfg.soundEnabled !== false ? cfg.soundUri : undefined,
       });
 
       await notifee.displayNotification({
@@ -80,7 +81,7 @@ export class YourGPTNotificationHelper {
           channelId,
           importance: 4,
           pressAction: { id: 'default' },
-          smallIcon: config?.smallIconRes ?? 'ic_yourgpt_notification',
+          smallIcon: cfg.smallIconRes,
           actions: actions.map(a => ({
             title: a.title,
             pressAction: {
@@ -183,15 +184,15 @@ export class YourGPTNotificationHelper {
   ): Promise<void> {
     try {
       const notifee = require('@notifee/react-native').default;
-      const channelId = config?.channelId ?? 'yourgpt_messages_v2';
+      const cfg = withNotificationDefaults(config);
+      const channelId = cfg.channelId;
 
       await notifee.createChannel({
         id: channelId,
-        name: config?.channelName ?? 'YourGPT Messages',
+        name: cfg.channelName,
+        description: cfg.channelDescription,
         importance: 4,
-        sound: config?.soundEnabled !== false
-          ? (config?.soundUri ?? 'yourgpt_notification')
-          : undefined,
+        sound: cfg.soundEnabled !== false ? cfg.soundUri : undefined,
       });
 
       await notifee.displayNotification({
@@ -203,10 +204,8 @@ export class YourGPTNotificationHelper {
           channelId,
           importance: 4,
           pressAction: { id: 'default' },
-          smallIcon: config?.smallIconRes ?? 'ic_yourgpt_notification',
-          groupId: config?.groupMessages !== false
-            ? (config?.groupKey ?? 'yourgpt_group')
-            : undefined,
+          smallIcon: cfg.smallIconRes,
+          groupId: cfg.groupMessages !== false ? cfg.groupKey : undefined,
         },
       });
     } catch (e: any) {
@@ -226,8 +225,9 @@ export class YourGPTNotificationHelper {
       const { getPushNotificationIOS } = require('./getPushNotificationIOS');
       const PushNotificationIOS = getPushNotificationIOS();
 
-      const threadId = sessionUid && config?.threadIdentifierPrefix
-        ? `${config.threadIdentifierPrefix}.${sessionUid}`
+      const cfg = withNotificationDefaults(config);
+      const threadId = sessionUid && cfg.threadIdentifierPrefix
+        ? `${cfg.threadIdentifierPrefix}.${sessionUid}`
         : undefined;
 
       PushNotificationIOS.addNotificationRequest({
@@ -235,13 +235,13 @@ export class YourGPTNotificationHelper {
         title,
         subtitle,
         body,
-        sound: config?.soundEnabled !== false
+        sound: cfg.soundEnabled !== false
           ? (() => {
-              const uri = config?.soundUri ?? 'yourgpt_notification';
+              const uri = cfg.soundUri!;
               return uri.includes('.') ? uri : `${uri}.wav`;
             })()
           : undefined,
-        category: config?.categoryIdentifier ?? 'chat_message',
+        category: cfg.categoryIdentifier ?? 'chat_message',
         threadId,
         userInfo: data ?? {},
       });

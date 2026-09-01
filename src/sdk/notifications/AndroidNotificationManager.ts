@@ -5,6 +5,7 @@ import type { YourGPTNotificationConfig } from '../types/config';
 import { NotificationMode } from '../types/config';
 import type { YourGPTEventListener } from '../types/events';
 import { QuietHoursManager } from './QuietHoursManager';
+import { withNotificationDefaults } from './defaults';
 
 interface NotificationData {
   title?: string;
@@ -25,7 +26,13 @@ export class AndroidNotificationManager {
   // Config used by the headless (killed-state) message handler. index.js can
   // customize it via registerNotificationHandler(config, mode); a mounted
   // manager instance keeps it in sync with the runtime config.
-  private static _headlessConfig: YourGPTNotificationConfig = {};
+  //
+  // Seeded with the shared defaults, not {}: the headless JS context never
+  // constructs a YourGPTNotificationClient, so nothing else would apply them
+  // and killed-state notifications would land on a different channel than
+  // foreground ones.
+  private static _headlessConfig: YourGPTNotificationConfig =
+    withNotificationDefaults();
   private static _headlessMode: NotificationMode = NotificationMode.MINIMALIST;
 
   private config: YourGPTNotificationConfig;
@@ -58,7 +65,8 @@ export class AndroidNotificationManager {
     if (Platform.OS !== 'android') return;
 
     if (config) {
-      AndroidNotificationManager._headlessConfig = config;
+      AndroidNotificationManager._headlessConfig =
+        withNotificationDefaults(config);
     }
     if (mode) {
       AndroidNotificationManager._headlessMode = mode;
@@ -130,13 +138,14 @@ export class AndroidNotificationManager {
     mode: NotificationMode,
     onTokenReceived: (token: string) => void,
   ) {
-    this.config = config;
+    this.config = withNotificationDefaults(config);
     this.mode = mode;
     this.onTokenReceived = onTokenReceived;
-    this.quietHours = new QuietHoursManager(config);
+    this.quietHours = new QuietHoursManager(this.config);
 
-    // Keep the headless (killed-state) handler consistent with runtime config.
-    AndroidNotificationManager._headlessConfig = config;
+    // Keep the headless (killed-state) handler consistent with runtime config,
+    // so a notification looks the same whether the app was alive or killed.
+    AndroidNotificationManager._headlessConfig = this.config;
     AndroidNotificationManager._headlessMode = mode;
   }
 
@@ -358,8 +367,15 @@ export class AndroidNotificationManager {
 
   private static async displayLocalNotification(
     data: NotificationData,
-    config: YourGPTNotificationConfig,
+    rawConfig: YourGPTNotificationConfig,
   ): Promise<void> {
+    // Final choke point for every Android display path (foreground, background
+    // and headless), so resolve defaults here rather than trusting the caller
+    // to have merged them. Inline `??` fallbacks must not be reintroduced
+    // below: they are how the headless path silently drifted onto a stale
+    // channel ID.
+    const config = withNotificationDefaults(rawConfig);
+
     const title = data.title ?? data.sender_name ?? 'New Message';
     const body = data.body ?? data.message_content ?? '';
 
@@ -394,19 +410,15 @@ export class AndroidNotificationManager {
         }
       }
 
-      const channelId = config.channelId ?? 'yourgpt_messages';
+      const channelId = config.channelId;
 
       // Create notification channel (required on Android 8+, no-op if exists)
       await notifee.createChannel({
         id: channelId,
-        name: config.channelName ?? 'YourGPT Messages',
-        description:
-          config.channelDescription ?? 'Notifications from YourGPT chatbot',
+        name: config.channelName,
+        description: config.channelDescription,
         importance: 4, // HIGH
-        sound:
-          config.soundEnabled !== false
-            ? config.soundUri ?? 'yourgpt_notification'
-            : undefined,
+        sound: config.soundEnabled !== false ? config.soundUri : undefined,
         vibration: config.vibrationEnabled !== false,
         vibrationPattern:
           config.vibrationEnabled !== false
@@ -434,11 +446,8 @@ export class AndroidNotificationManager {
           // notification; onlyAlertOnce keeps that update from re-alerting.
           onlyAlertOnce: true,
           pressAction: { id: 'default' },
-          smallIcon: config.smallIconRes ?? 'ic_yourgpt_notification',
-          groupId:
-            config.groupMessages !== false
-              ? config.groupKey ?? 'yourgpt_group'
-              : undefined,
+          smallIcon: config.smallIconRes,
+          groupId: config.groupMessages !== false ? config.groupKey : undefined,
         },
       });
     } catch (e: any) {

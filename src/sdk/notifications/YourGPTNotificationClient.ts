@@ -8,28 +8,10 @@ import {
   requestNotificationPermission,
   areNotificationsEnabled,
 } from './NotificationPermissions';
+import { withNotificationDefaults } from './defaults';
 import { handleNotificationDeepLink } from '../utils/deepLink';
 import { Logger } from '../utils/logger';
 
-const DEFAULT_CONFIG: YourGPTNotificationConfig = {
-  soundEnabled: true,
-  soundUri: 'yourgpt_notification',
-  vibrationEnabled: true,
-  groupMessages: true,
-  showReplyAction: true,
-  autoCancel: true,
-  showMessagePreview: true,
-  maxPreviewLength: 100,
-  stackNotifications: true,
-  maxNotificationStack: 5,
-  badgeEnabled: true,
-  // Bumped from 'yourgpt_messages' — Android channels are immutable after creation,
-  // so a new ID ensures fresh installs get the custom sound on the channel.
-  channelId: 'yourgpt_messages_v2',
-  channelName: 'YourGPT Messages',
-  channelDescription: 'Notifications from YourGPT chatbot',
-  smallIconRes: 'ic_yourgpt_notification',
-};
 
 export class YourGPTNotificationClient {
   private config: YourGPTNotificationConfig;
@@ -45,7 +27,7 @@ export class YourGPTNotificationClient {
     config: YourGPTNotificationConfig = {},
     mode: NotificationMode = NotificationMode.MINIMALIST,
   ) {
-    this.config = { ...DEFAULT_CONFIG, ...config };
+    this.config = withNotificationDefaults(config);
     this.mode = mode;
   }
 

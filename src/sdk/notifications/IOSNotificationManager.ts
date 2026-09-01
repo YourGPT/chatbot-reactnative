@@ -5,6 +5,7 @@ import {NotificationMode} from '../types/config';
 import type {YourGPTEventListener} from '../types/events';
 import {QuietHoursManager} from './QuietHoursManager';
 import {YourGPTApnsNative} from './YourGPTApnsNative';
+import {withNotificationDefaults} from './defaults';
 
 const APNS_TOKEN_STORAGE_KEY = 'yourgpt_sdk_push_token';
 
@@ -36,10 +37,10 @@ export class IOSNotificationManager {
     mode: NotificationMode,
     onTokenReceived: (token: string) => void,
   ) {
-    this.config = config;
+    this.config = withNotificationDefaults(config);
     this.mode = mode;
     this.onTokenReceived = onTokenReceived;
-    this.quietHours = new QuietHoursManager(config);
+    this.quietHours = new QuietHoursManager(this.config);
     this.useNativeModule = YourGPTApnsNative.isAvailable;
   }
 
@@ -379,7 +380,7 @@ export class IOSNotificationManager {
         ? `${this.config.threadIdentifierPrefix}.${sessionUid}`
         : undefined;
 
-      const soundUri = this.config.soundUri ?? 'yourgpt_notification';
+      const soundUri = this.config.soundUri!;
       const iosSoundUri = soundUri.includes('.') ? soundUri : `${soundUri}.wav`;
 
       PushNotificationIOS.addNotificationRequest({

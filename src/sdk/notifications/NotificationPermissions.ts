@@ -1,6 +1,7 @@
 import { Platform, PermissionsAndroid } from 'react-native';
 import { Logger } from '../utils/logger';
 import {getPushNotificationIOS} from './getPushNotificationIOS';
+import {YourGPTApnsNative} from './YourGPTApnsNative';
 
 export async function requestNotificationPermission(): Promise<boolean> {
   if (Platform.OS === 'android') {
@@ -31,6 +32,17 @@ async function requestAndroidPermission(): Promise<boolean> {
 }
 
 async function requestIOSPermission(): Promise<boolean> {
+  // Prefer the SDK's own native module: it requests authorization AND calls
+  // registerForRemoteNotifications(), so no extra JS dependency is needed.
+  // @react-native-community/push-notification-ios is only a fallback for apps
+  // that haven't run `pod install` for the SDK's podspec.
+  if (YourGPTApnsNative.isAvailable) {
+    Logger.log('[APNs-Flow] Requesting iOS notification permission via native YourGPTApns module...');
+    const granted = await YourGPTApnsNative.requestPermission();
+    Logger.log('[APNs-Flow] iOS notification permission (native module) | granted:', granted);
+    return granted;
+  }
+
   try {
     const PushNotificationIOS = getPushNotificationIOS();
     Logger.log('[APNs-Flow] Requesting iOS notification permission...');
@@ -44,7 +56,9 @@ async function requestIOSPermission(): Promise<boolean> {
     return granted;
   } catch (e) {
     Logger.error(
-      '[APNs-Flow] Error requesting iOS notification permission (is @react-native-community/push-notification-ios installed?):',
+      '[APNs-Flow] Could not request iOS notification permission. Either run `pod install` so the ' +
+        'SDK\'s native YourGPTApns module is linked (and call YourGPTApns.configure(application) in ' +
+        'AppDelegate.swift), or install @react-native-community/push-notification-ios. Error:',
       e,
     );
     return false;
@@ -63,6 +77,10 @@ export async function areNotificationsEnabled(): Promise<boolean> {
   }
 
   if (Platform.OS === 'ios') {
+    if (YourGPTApnsNative.isAvailable) {
+      return YourGPTApnsNative.isPermissionGranted();
+    }
+
     try {
       const PushNotificationIOS = getPushNotificationIOS();
       return new Promise(resolve => {
