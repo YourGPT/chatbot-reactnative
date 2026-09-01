@@ -1,3 +1,15 @@
 {
-  "extends": "@tsconfig/react-native/tsconfig.json"
+  "extends": "@react-native/typescript-config",
+  "compilerOptions": {
+    "types": ["react"],
+    "baseUrl": ".",
+    "paths": {
+      "react": ["./example/node_modules/@types/react"],
+      "react-native": ["./example/node_modules/react-native"],
+      "react-native-webview": ["./example/node_modules/react-native-webview"],
+      "react-native-safe-area-context": ["./example/node_modules/react-native-safe-area-context"]
+    }
+  },
+  "include": ["src/sdk/**/*.ts", "src/sdk/**/*.tsx"],
+  "exclude": ["node_modules", "example"]
 }

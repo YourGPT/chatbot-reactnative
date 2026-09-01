@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "325216438339",
+    "project_id": "yourgpt-widget-sdk",
+    "storage_bucket": "yourgpt-widget-sdk.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:325216438339:android:215f22a5b02ba7e22eecf6",
+        "android_client_info": {
+          "package_name": "com.yourgpt.flutter.yourgpt_flutter_example"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAG0Gh35J9Rjdn0iLAKGCH4jtUssoRv7CQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:325216438339:android:11555926eb55a9712eecf6",
+        "android_client_info": {
+          "package_name": "com.yourgpt.sdk.example"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAG0Gh35J9Rjdn0iLAKGCH4jtUssoRv7CQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:325216438339:android:f2e1c13e0c5068182eecf6",
+        "android_client_info": {
+          "package_name": "com.yourgptwidgetsdkreactnative"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAG0Gh35J9Rjdn0iLAKGCH4jtUssoRv7CQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
