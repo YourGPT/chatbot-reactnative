@@ -1,7 +1,0 @@
-{
-  "compilerOptions": {
-    "typeRoots": ["node_modules/@types", "lib"],
-    "types": ["@yourgpt/chatbot-reactnative"],
-    "jsx": "react"
-  }
-}

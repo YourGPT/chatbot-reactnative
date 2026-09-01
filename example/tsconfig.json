@@ -1,0 +1,15 @@
+{
+  "extends": "@react-native/typescript-config",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@yourgpt/chatbot-reactnative": ["../src/sdk"],
+      "react": ["./node_modules/@types/react"],
+      "react-native": ["./node_modules/react-native"],
+      "react-native-webview": ["./node_modules/react-native-webview"],
+      "react-native-safe-area-context": ["./node_modules/react-native-safe-area-context"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules", "Pods"]
+}
