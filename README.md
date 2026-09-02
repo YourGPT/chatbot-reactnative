@@ -2,9 +2,11 @@
 
 A React Native SDK for integrating YourGPT chatbot widget into iOS and Android applications.
 
-<p align="center">
+<p align="center" >
   <img src="assets/demo1.webp" alt="YourGPT chatbot widget demo" width="30%" />
+  &nbsp;&nbsp;&nbsp;&nbsp;
   <img src="assets/demo2.webp" alt="YourGPT chatbot widget demo" width="30%" />
+  &nbsp;&nbsp;&nbsp;&nbsp;
   <img src="assets/demo3.webp" alt="YourGPT chatbot widget demo" width="30%" />
 </p>
 
